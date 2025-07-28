@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calci</title>
+    <link rel="stylesheet" href="budget.css">
+</head>
+<body>
+    <center><h1>Budget Calculator</h1></center>
+    <div class="border"></div>
+    <center><p>Enter your total income:</p></center>
+    <center><input type="number" id="income"></center>
+
+    <center><p>Enter your expenditure on:</p></center>
+    <center>
+        <label>Food:</label>
+        <input type="number" id="food"><br>
+        <label>Transport:</label>
+        <input type="number" id="transport"><br>
+        <label>Entertainment:</label>
+        <input type="number" id="entertainment"><br>
+        <label>Other:</label>
+        <input type="number" id="other"><br>
+    </center>
+    <br>
+    <center>
+        <button onclick="calculateBudget()">Calculate Budget</button>
+        <button onclick="resetFields()">Reset</button>
+    </center>
+
+    <div id="result" style="text-align:center; margin-top:20px;"></div>
+
+    <script>
+        function calculateBudget() {
+            let income = parseFloat(document.getElementById("income").value) || 0;
+            let food = parseFloat(document.getElementById("food").value) || 0;
+            let transport = parseFloat(document.getElementById("transport").value) || 0;
+            let entertainment = parseFloat(document.getElementById("entertainment").value) || 0;
+            let other = parseFloat(document.getElementById("other").value) || 0;
+
+            let totalExpenditure = food + transport + entertainment + other;
+
+            if (income <= 0) {
+                alert("Please enter a valid income.");
+                return;
+            }
+
+            let balance = income - totalExpenditure;
+            let savingsPercent = ((balance / income) * 100).toFixed(2);
+
+            let summary = `
+                <h3>Summary</h3>
+                <p>Total Income: ₹${income}</p>
+                <p>Total Expenditure: ₹${totalExpenditure}</p>
+                <p>Balance: ₹${balance}</p>
+                <p>Savings: ${balance >= 0 ? savingsPercent + "%" : "Over budget!"}</p>
+            `;
+
+            document.getElementById("result").innerHTML = summary;
+        }
+
+        function resetFields() {
+            document.getElementById("income").value = '';
+            document.getElementById("food").value = '';
+            document.getElementById("transport").value = '';
+            document.getElementById("entertainment").value = '';
+            document.getElementById("other").value = '';
+            document.getElementById("result").innerHTML = '';
+        }
+    </script>
+</body>
+</html>
